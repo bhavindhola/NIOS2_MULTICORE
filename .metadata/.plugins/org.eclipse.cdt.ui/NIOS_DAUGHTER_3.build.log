@@ -1,0 +1,10 @@
+
+**** Build of configuration Nios II for project NIOS_DAUGHTER_3 ****
+
+make all 
+Info: Building ../NIOS_DAUGHTER_3_bsp/
+make --no-print-directory -C ../NIOS_DAUGHTER_3_bsp/
+[BSP build complete]
+[NIOS_DAUGHTER_3 build complete]
+
+**** Build Finished ****

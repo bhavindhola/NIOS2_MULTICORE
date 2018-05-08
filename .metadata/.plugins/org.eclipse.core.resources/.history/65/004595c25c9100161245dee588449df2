@@ -1,0 +1,32 @@
+
+
+#include "sys/alt_stdio.h"
+#include "system.h"
+#include "stdio.h"
+#include "altera_avalon_pio_regs.h"
+int main()
+{
+	int a=75;
+	int b=5;
+	//int c = 10;
+	//int d = 10;
+	int f,x ,y;
+ printf ("enter your value  c and d");
+ scanf(""%d %d",&x,&y);
+   if (x>y)
+   {
+	  f = a+b;
+	  printf("answer is %d",f);
+   }
+   else if (x>y)
+   {
+	   f= a-b;
+	   printf("answer is %d",f);
+   }
+   else
+   {
+	   f = a/b;
+	   printf("answer is %d",f);
+   }
+  return 0;
+}

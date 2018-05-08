@@ -1,0 +1,10 @@
+
+**** Build of configuration Nios II for project NIOS_MOTHER ****
+
+make all 
+Info: Building ../NIOS_MOTHER_bsp/
+make --no-print-directory -C ../NIOS_MOTHER_bsp/
+[BSP build complete]
+[NIOS_MOTHER build complete]
+
+**** Build Finished ****

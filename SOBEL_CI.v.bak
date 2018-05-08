@@ -1,0 +1,110 @@
+module sobel(rsi_reset_n,csi_clk, avs_so_read, avs_so_readdata, avs_so_write,avs_so_writedata, avs_so_address);
+input csi_clk, rsi_reset_n;
+
+input avs_so_read;
+input avs_so_write;
+input [31:0] avs_so_writedata;
+output  [31:0] avs_so_readdata;
+input [7:0] avs_so_address;
+reg [31:0] out;
+reg [31:0] avs_so_readdata;
+reg enable,myclk;
+reg [31:0] a11,a12,a13,a21,a23,a31,a32,a33;
+reg [31:0] gx,gy;
+
+
+
+always@(posedge csi_clk or negedge rsi_reset_n) begin 
+	if (!rsi_reset_n ) begin
+		myclk <= 0;
+   end  
+   else begin 
+		if(enable) begin
+			myclk <=1;
+		end
+		else begin 
+		myclk <=0;
+		end 
+	end 
+end
+always @* begin
+  if(avs_so_read) begin
+      case (avs_so_address)
+			8'd0: begin
+				avs_so_readdata <= out; 
+				end
+				default : begin
+				end
+		 endcase
+	end 
+	else begin 
+		 avs_so_readdata <= 100;
+	end
+end
+		 
+		 
+		 
+always@(posedge csi_clk or negedge rsi_reset_n) begin
+	if (!rsi_reset_n) begin 
+		a11 <=0;
+		a12 <=0;
+		a13 <=0;
+		a21 <=0;
+		a23 <=0;
+		a31 <=0;
+		a32 <=0;
+		a33 <=0;
+		
+	end
+	else if (avs_so_write) begin 
+		case (avs_so_address)
+			8'd0: begin
+				   a11 <= avs_so_writedata;
+				   enable<=0;
+					end
+			8'd4: begin
+					a12 <= avs_so_writedata;
+					enable<=0;
+					end
+			8'd8: begin
+					a13 <= avs_so_writedata;
+					enable<=0;
+					end
+			8'd12: begin
+					a21 <= avs_so_writedata;
+					enable<=0;
+					end
+			8'd16: begin
+					a23 <= avs_so_writedata;
+					enable<=0;
+					end
+			8'd20: begin
+					a31 <= avs_so_writedata;
+					enable<=0;
+					end
+			8'd24: begin
+					a32 <= avs_so_writedata;
+					enable<=0;
+					end
+			8'd28: begin
+					a33 <= avs_so_writedata;
+					enable<=1;
+					end
+	
+	
+			default: begin
+					end
+		endcase
+		end
+end
+	
+	always @* begin
+	gx <= (a31 + (a32<<1) + a33) - (a11 + (a12<<1) + a13);
+	gy <= (a13 + (a23<<1) + a33) - (a11 + (a21<<1) + a31);
+	out <= gx + gy;
+   
+	 end
+	 endmodule
+
+
+	

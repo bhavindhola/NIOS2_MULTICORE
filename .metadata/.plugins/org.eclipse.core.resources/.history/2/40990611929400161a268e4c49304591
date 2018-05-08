@@ -1,0 +1,91 @@
+// NIOS_TOP_MOTHER_PROCESSOR
+
+
+
+#include "sys/alt_stdio.h"
+#include"stdio.h"
+#include"system.h"
+#include "io.h"
+#define MULTICORE_NIOS_0_BASE 0x7000000
+
+int main()
+{
+int a;
+ printf("Decide the number of the processor which you want to run\n");
+ scanf("%d",a);
+ if (a==1)
+ {
+	 printf("writting  ID for processor 1\n");
+	 IOWR(MULTICORE_NIOS_0_BASE,0,0x00000001); //  send id for processor 1
+	 printf("writting status for processor 1\n");
+	 IOWR(MULTICORE_NIOS_0_BASE,10,0x00000010); //  write status for processor 1
+
+ }
+ if (a==2)
+ {
+ 	 printf("writting  ID for processor 2\n");
+ 	 IOWR(MULTICORE_NIOS_0_BASE,11,0x00000002); //  send id for processor 2
+ 	 printf("writting status for processor 2\n");
+ 	 IOWR(MULTICORE_NIOS_0_BASE,21,0x00000020); //  write status for processor 2
+
+  }
+ if (a==3)
+  {
+ 	 printf("writting  ID for processor 3\n");
+ 	 IOWR(MULTICORE_NIOS_0_BASE,22,0x00000003); //  send id for processor 3
+ 	 printf("writting status for processor 3\n");
+ 	 IOWR(MULTICORE_NIOS_0_BASE,32,0x00000030); //  write status for processor 3
+
+ }
+
+
+
+	    	 //  Waiting for update of status reg in custom interface  to finish task
+
+ if (a==1)
+ {
+	 printf("waiting for processor 1 to complete its task \n");
+	 while (1)
+	 {
+		 int status = IORD(MULTICORE_NIOS_0_BASE,10);
+		 if (status == 0x00000080)
+		 {
+			 break;
+		 }
+	 }
+ }
+  if (a==2)
+   {
+  	 printf("waiting for processor 2 to complete its task \n");
+  	 while (1)
+  	 {
+  		 int status = IORD(MULTICORE_NIOS_0_BASE,21);
+  		 if (status == 0x00000080)
+  		 {
+  			 break;
+  		 }
+  	 }
+   }
+  if (a==3)
+   {
+  	 printf("waiting for processor 3 to complete its task \n");
+  	 while (1)
+  	 {
+  		 int status = IORD(MULTICORE_NIOS_0_BASE,32);
+  		 if (status == 0x00000080)
+  		 {
+  			 break;
+  		 }
+  	 }
+   }
+
+
+
+
+
+	      return 0;
+	    }
+
+
+
+
